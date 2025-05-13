@@ -1,0 +1,10 @@
+myenv
+*.wav
+*.raw
+__pycache__
+
+# keep testing wav file
+!testing/beat.wav
+!testing/voice.wav
+!testing/synth.wav
+!testing/pluck.wav
