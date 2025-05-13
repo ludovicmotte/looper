@@ -1,0 +1,6 @@
+myenv
+*.wav
+*.raw
+
+# keep test file
+!bass.wav
