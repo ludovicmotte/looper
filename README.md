@@ -10,7 +10,7 @@ source myenv/bin/activate
 
 # dependencies installation
 ```bash
-sudo apt install -y libportaudio2 portaudio19-dev pulseaudio   # WSL only
+sudo apt install -y libportaudio2 portaudio19-dev pulseaudio
 pip install sounddevice scipy sshkeyboard
 ```
 
@@ -29,7 +29,7 @@ sounddevice (Python)
 # run
 ```bash
 export PULSE_SERVER=unix:/mnt/wslg/PulseServer
-python rec-play.py
+python rec_play.py
 ```
 
 
