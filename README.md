@@ -10,7 +10,7 @@ source myenv/bin/activate
 
 # dependencies installation
 ```bash
-sudo apt install -y libportaudio2 portaudio19-dev pulseaudio
+sudo apt install -y libportaudio2 portaudio19-dev pulseaudio   # WSL only
 pip install sounddevice scipy sshkeyboard
 ```
 
