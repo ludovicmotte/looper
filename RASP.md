@@ -97,6 +97,9 @@ pulseaudio --start ??
 ```bash
 watch -n 0.2 gpioget gpiochip0 17
 
+
+sudo apt install python3-rpi.gpio
+
 pip install gpiozero
 python button.py
 ```
