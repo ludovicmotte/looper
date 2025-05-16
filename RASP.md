@@ -11,12 +11,12 @@ Open Programming / Visual Studio Code, then directory ~/workspace/looper
 
 # init system
 ```bash
+#if not done during first boot
 sudo apt-get update
 sudo apt-get upgrade
-sudo reboot
-
 # if upgrade hangs:
 # sudo apt-get remove real-vnc-server
+sudo reboot
 ```
 
 # init bluetooth for bluetooth speaker
@@ -24,13 +24,13 @@ sudo reboot
 See https://pimylifeup.com/raspberry-pi-bluetooth/
 
 ```bash
-sudo apt install -y bluetooth pi-bluetooth bluez blueman pavucontrol
+# not usefull
+# sudo apt install -y bluetooth pi-bluetooth bluez blueman pavucontrol
 ```
 
 ## with GUI
 
-Open Preferences / Bluetooth Manager
- - enable auto bluetooth
+Open  Bluetooth Manager
  - search
  - pair
  - trust
@@ -60,8 +60,8 @@ quit
 Output sound to JBL Flip 3 SE
 ```bash
 wpctl status
-# find Audio / Sinks / JBL Flip 3 SE -> 80
-wpctl set-default 80
+# find Audio / Sinks / JBL Flip 3 SE -> 75
+wpctl set-default 75
 ```
 
 
@@ -78,20 +78,22 @@ See https://iotbytes.wordpress.com/connect-configure-and-test-usb-microphone-and
 aplay -l
 arecord -l
 
+# give card 3 device 0
+
 wpctl status
-# find Audio / Sources / BT600 Mono -> 91
+# find Audio / Sources / BT600 Mono -> 85
 wpctl set-default 91
 
 arecord --format=S16_LE --duration=5 --rate=16000 --file-type=raw out.raw
 aplay --format=S16_LE --rate=16000 out.raw
 ```
 
-pulseaudio --start ??
-
 
 # test button
 ```bash
 watch -n 0.2 gpioget gpiochip0 2
 
+# BUG : ne marche que sans le venv, car si venv + pip install gpiozero => BUG
 python button.py
 ```
+
