@@ -3,6 +3,8 @@
 mkdir workspace && cd workspace
 git clone https://github.com/ludovicmotte/looper.git && cd looper
 sudo apt install -y code
+git config --global user.name "raspberry"
+git config --global user.email "raspberry@pi.com"
 ```
 
 Open Programming / Visual Studio Code, then directory ~/workspace/looper
@@ -15,12 +17,6 @@ sudo reboot
 
 # if upgrade hangs:
 # sudo apt-get remove real-vnc-server
-```
-
-```bash
-git config --global user.name "raspberry"
-git config --global user.email "raspberry@pi.com"
-
 ```
 
 # init bluetooth for bluetooth speaker
