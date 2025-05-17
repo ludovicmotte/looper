@@ -92,8 +92,19 @@ aplay --format=S16_LE --rate=16000 out.raw
 # test button
 ```bash
 watch -n 0.2 gpioget gpiochip0 2
+```
 
-# BUG : ne marche que sans le venv, car si venv + pip install gpiozero => BUG
+With venv:
+```bash
+pip install gpiozero
+pip install RPi.lGPIO
+```
+or
+```bash
+python3 -m venv --system-site-packages myenv
+```
+
+```bash
 python button.py
 ```
 
