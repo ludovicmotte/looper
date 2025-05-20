@@ -4,3 +4,7 @@ myenv
 
 # keep test file
 !bass.wav
+!bass.wav
+!voice.wav
+!synth.wav
+!pluck.wav
