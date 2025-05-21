@@ -79,7 +79,7 @@ def mix_tracks(tracks: List[np.ndarray]) -> np.ndarray:
     return mix
 
 
-def play(audio_files_paths: List[str]):
+def play_in_loop(audio_files_paths: List[str]):
     """
     Play mixed audio files in an infinite loop.
 
@@ -102,9 +102,10 @@ def play(audio_files_paths: List[str]):
         sd.play(mixed_audio, sample_rate)
         sd.wait()
 
+# Exemple d'utilisation
 def main():
-    audio_files_paths = ['beat.wav', 'synth.wav', 'pluck.wav', 'voice.wav']
-    play(audio_files_paths)
+    audio_files_paths = ['testing/beat.wav', 'testing/synth.wav', 'testing/pluck.wav', 'testing/voice.wav']
+    play_in_loop(audio_files_paths)
 
 
 if __name__ == "__main__":
