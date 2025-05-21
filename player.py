@@ -1,8 +1,11 @@
+from time import sleep
 import sounddevice as sd
 import soundfile as sf
 import numpy as np
 from typing import List, Tuple
 
+is_playing = False
+asked_stop = False
 
 def read_audio_files(audio_files_paths: List[str]) -> Tuple[List[np.ndarray], int]:
     """
@@ -89,6 +92,18 @@ def play_in_loop(audio_files_paths: List[str]):
     Returns:
         None
     """
+
+    global is_playing, asked_stop
+    if is_playing:
+        if asked_stop:
+            print("Too many play requests, abort...")
+            return
+        print("Waiting for the previous loop to finish...")
+        asked_stop = True
+        while is_playing:
+            sleep(0.1)
+        print("Waiting ended !!")
+
     audio_data, sample_rate = read_audio_files(audio_files_paths)
     aligned_data = align_audio_lengths(audio_data)
     mixed_audio = mix_tracks(aligned_data)
@@ -98,9 +113,18 @@ def play_in_loop(audio_files_paths: List[str]):
     print(f"Total duration of the loop: {duration_seconds:.2f} seconds")
 
     # Infinite playback loop
-    while True:
+    is_playing = True
+    while not asked_stop:
         sd.play(mixed_audio, sample_rate)
         sd.wait()
+    is_playing = False
+    asked_stop = False
+
+
+def stop_playing():
+    global asked_stop
+    asked_stop = True
+
 
 # Exemple d'utilisation
 def main():

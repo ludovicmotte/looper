@@ -7,16 +7,16 @@ keyboard_actions: Dict[str, Callable[[], None]] = {}
 def press(key: str):
     if key in keyboard_actions:
         keyboard_actions[key]()
-    elif key in ['q', 'esc']:
-        print("🛑 Arrêt de l'écoute clavier.")
-        stop_listening()
     #else:
     #    print(f"Touche non prise en charge : {key}")
 
 def start_keyboard_listening(custom_actions: Dict[str, Callable[[], None]]):
     global keyboard_actions
     keyboard_actions = custom_actions
-    listen_keyboard(on_press=press)
+    listen_keyboard(on_press=press, until="")
+
+def stop_keyboard_listening():
+    stop_listening()
 
 # Exemple d'utilisation
 def main():
@@ -25,7 +25,7 @@ def main():
         '2': lambda: print("2️⃣"),
         '3': lambda: print("3️⃣"),
         '4': lambda: print("4️⃣"),
-        # Tu peux ajouter d'autres touches ici...
+        'q': stop_keyboard_listening,
     })
 
 if __name__ == "__main__":
