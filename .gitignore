@@ -2,9 +2,8 @@ myenv
 *.wav
 *.raw
 
-# keep test file
-!bass.wav
-!bass.wav
-!voice.wav
-!synth.wav
-!pluck.wav
+# keep testing wav file
+!testing/beat.wav
+!testing/voice.wav
+!testing/synth.wav
+!testing/pluck.wav
