@@ -1,6 +1,7 @@
 myenv
 *.wav
 *.raw
+__pycache__
 
 # keep testing wav file
 !testing/beat.wav

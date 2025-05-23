@@ -1,22 +1,40 @@
-from player import play_in_loop, stop_playing
+from audio_manager import read_audio_file
+from audio_player import stop_playing
 from keyboard_manager import start_keyboard_listening, stop_keyboard_listening
+from tracks_manager import TrackManager
+
+
+track_manager = TrackManager()
+file_paths = [
+    "testing/beat.wav",
+    "testing/synth.wav",
+    "testing/pluck.wav",
+    "testing/voice.wav",
+]
+for i, file_path in enumerate(file_paths, start=1):
+    audio_data, sample_rate = read_audio_file(file_path)
+    track_manager.set_track(i, audio_data, sample_rate, False)
 
 
 def on_1_pressed():
     print("1️⃣")
-    play_in_loop(["testing/beat.wav"])
+    track_manager.toggle_track(1)
+
 
 def on_2_pressed():
     print("2️⃣")
-    play_in_loop(["testing/beat.wav", "testing/synth.wav"])
+    track_manager.toggle_track(2)
+
 
 def on_3_pressed():
     print("3️⃣")
-    play_in_loop(["testing/beat.wav", "testing/synth.wav", "testing/voice.wav"])
+    track_manager.toggle_track(3)
+
 
 def on_4_pressed():
     print("4️⃣")
-    play_in_loop(["testing/beat.wav", "testing/synth.wav", "testing/pluck.wav"])
+    track_manager.toggle_track(4)
+
 
 def on_quit_pressed():
     print("❌")
@@ -28,15 +46,16 @@ def on_quit_pressed():
 def main():
 
     # Démarrer l'écoute du clavier
-    start_keyboard_listening({
-        '1': on_1_pressed,
-        '2': on_2_pressed,
-        '3': on_3_pressed,
-        '4': on_4_pressed,
-        'q': on_quit_pressed,
-        'esc': on_quit_pressed,
-    })
-
+    start_keyboard_listening(
+        {
+            "1": on_1_pressed,
+            "2": on_2_pressed,
+            "3": on_3_pressed,
+            "4": on_4_pressed,
+            "q": on_quit_pressed,
+            "esc": on_quit_pressed,
+        }
+    )
 
 
 if __name__ == "__main__":
