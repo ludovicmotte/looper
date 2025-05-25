@@ -43,10 +43,10 @@ def stop_keyboard_listening():
 def main():
     start_keyboard_listening(
         {
-            "1": lambda: print("1️⃣"),
-            "2": lambda: print("2️⃣"),
-            "3": lambda: print("3️⃣"),
-            "4": lambda: print("4️⃣"),
+            "1": lambda: print("1️ is pressed"),
+            "2": lambda: print("2️ is pressed"),
+            "3": lambda: print("3️ is pressed"),
+            "4": lambda: print("4️ is pressed"),
             "q": stop_keyboard_listening,
         }
     )

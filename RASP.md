@@ -108,3 +108,14 @@ python3 -m venv --system-site-packages myenv
 python button.py
 ```
 
+sudo apt install -y python3.11-venv
+python3 -m venv --system-site-packages myenv
+source myenv/bin/activate
+pip install pynput
+python keyboard_manager.py
+
+Listening for keys 1–4 and ‘q’ to quit. Press ‘q’ to stop.
+1️ is pressed
+12️ is pressed
+2
+
