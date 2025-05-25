@@ -1,6 +1,6 @@
 from audio_manager import read_audio_file
 from audio_player import stop_playing
-from keyboard_manager import start_keyboard_listening, stop_keyboard_listening
+from keyboard_manager_WSL import start_keyboard_listening, stop_keyboard_listening
 from tracks_manager import TrackManager
 
 
