@@ -95,11 +95,19 @@ wpctl set-default 91
 arecord --format=S16_LE --duration=5 --rate=16000 --file-type=raw out.raw
 aplay --format=S16_LE --rate=16000 out.raw
 ```
+# Python setup
 
+```bash
+sudo apt update
+sudo apt install -y python3.12-venv
+python3 -m venv --system-site-packages myenv
+source myenv/bin/activate
+```
 
 # test button
 ```bash
-watch -n 0.2 gpioget gpiochip0 2
+watch -n 0.2 gpioget -B pull-up gpiochip0 4
+python testing/button.py
 ```
 
 With venv:
