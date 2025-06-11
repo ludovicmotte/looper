@@ -27,6 +27,28 @@ sudo apt-get upgrade
 sudo reboot
 ```
 
+# Python setup
+
+```bash
+sudo apt update
+sudo apt install -y python3.12-venv
+python3 -m venv --system-site-packages myenv
+source myenv/bin/activate
+```
+
+# test button
+```bash
+watch -n 0.2 gpioget -B pull-up gpiochip0 4
+watch -n 0.2 gpioget -B pull-down gpiochip0 14
+python testing/button.py
+```
+
+~~With simple venv:~~
+```bash
+# pip install gpiozero
+# pip install RPi.lGPIO
+```
+
 # init bluetooth for bluetooth speaker
 
 See https://pimylifeup.com/raspberry-pi-bluetooth/
@@ -95,43 +117,10 @@ wpctl set-default 91
 arecord --format=S16_LE --duration=5 --rate=16000 --file-type=raw out.raw
 aplay --format=S16_LE --rate=16000 out.raw
 ```
-# Python setup
+
+# TODO
 
 ```bash
-sudo apt update
-sudo apt install -y python3.12-venv
-python3 -m venv --system-site-packages myenv
-source myenv/bin/activate
-```
-
-# test button
-```bash
-watch -n 0.2 gpioget -B pull-up gpiochip0 4
-python testing/button.py
-```
-
-With venv:
-```bash
-pip install gpiozero
-pip install RPi.lGPIO
-```
-or
-```bash
-python3 -m venv --system-site-packages myenv
-```
-
-```bash
-python button.py
-```
-
-sudo apt install -y python3.11-venv
-python3 -m venv --system-site-packages myenv
-source myenv/bin/activate
 pip install pynput
 python keyboard_manager.py
-
-Listening for keys 1–4 and ‘q’ to quit. Press ‘q’ to stop.
-1️ is pressed
-12️ is pressed
-2
-
+```
