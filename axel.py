@@ -1,14 +1,16 @@
 from keyboard_manager_WSL import start_keyboard_listening, stop_keyboard_listening
-from rec_play_manager import on_pressed
-
+from rec_play_manager import on_pressed, stop
 
 
 def on_1_pressed():
     on_pressed()
 
+
 def on_quit_pressed():
     print("❌")
     stop_keyboard_listening()
+    stop()
+
 
 # Main program
 def main():
