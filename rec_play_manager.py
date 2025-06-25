@@ -1,14 +1,13 @@
 import queue
 import sys
 import sounddevice as sd
-import soundfile as sf
+import numpy as np
 
 recording = False
-
 q = queue.Queue()
 samplerate = 44100
 channels = 1
-filename = "rec.wav"
+audio_data = []  # Liste pour accumuler les blocs audio
 
 
 def callback(indata, frames, time, status):
@@ -27,28 +26,27 @@ def on_pressed():
 
 
 def rec():
-    global filename
+    global audio_data
     print("let's rec")
-    with sf.SoundFile(
-        filename, mode="w", samplerate=samplerate, channels=channels
-    ) as file:
-        with sd.InputStream(
-            samplerate=samplerate, channels=channels, callback=callback
-        ):
-            while recording:
-                file.write(q.get())
+    audio_data = []  # Réinitialiser les données
+    with sd.InputStream(samplerate=samplerate, channels=channels, callback=callback):
+        while recording:
+            audio_data.append(q.get())
 
 
 def play():
-    global filename, recording
+    global audio_data, recording
+    if not audio_data:
+        print("No data to play")
+        return
     print("let's play in loop")
-    data, fs = sf.read(filename, dtype="float32")
+    # remet en ligne les blocs audio enregistrés par callback
+    data = np.concatenate(audio_data, axis=0)
     while not recording:
-        sd.play(data, fs)
+        sd.play(data, samplerate)
         sd.wait()
 
 
 def stop():
     global recording
-    recording = False
-    recording = True
+    recording = True  # ce qui veut dire playing False
