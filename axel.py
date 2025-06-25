@@ -1,14 +1,10 @@
 from keyboard_manager_WSL import start_keyboard_listening, stop_keyboard_listening
+from rec_play_manager import on_pressed
 
-recording = False
+
 
 def on_1_pressed():
-    global recording
-    if (recording):
-        print("let's play")
-    else:
-        print("let's rec")
-    recording = not recording
+    on_pressed()
 
 def on_quit_pressed():
     print("❌")
@@ -21,6 +17,7 @@ def main():
     start_keyboard_listening(
         {
             "1": on_1_pressed,
+            "q": on_quit_pressed,
             "esc": on_quit_pressed,
         }
     )
