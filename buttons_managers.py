@@ -1,3 +1,4 @@
+import threading
 import time
 from gpiozero import Button
 from typing import Callable
@@ -26,27 +27,28 @@ def start_buttons_listening(
         mute_unmute_action: Callable[[], None],
         save_action: Callable[[], None]):
     
-    button_t_plus.when_pressed = t_plus_action
-    button_t_minus.when_pressed = t_minus_action
-    button_rec_play.when_pressed = rec_play_action
-    button_mute_unmute.when_pressed = mute_unmute_action
-    button_save.when_pressed = save_action
+    # configure for each button the when_pressed thread
+    button_t_plus.when_pressed = lambda: threading.Thread(target=t_plus_action).start()
+    button_t_minus.when_pressed = lambda: threading.Thread(target=t_minus_action).start()
+    button_rec_play.when_pressed = lambda: threading.Thread(target=rec_play_action).start()
+    button_mute_unmute.when_pressed = lambda: threading.Thread(target=mute_unmute_action).start()
+    button_save.when_pressed = lambda: threading.Thread(target=save_action).start()
 
 
 
 # Exemple d'utilisation
 def main():
 
-    def on_rec_play_pressed():
-        print("rec/play pressed")
-        time.sleep(5)
+    def simulate_pressed(message, delay = 1):
+        print(message)
+        time.sleep(delay)
 
     start_buttons_listening(
-        lambda: print ("button_t_plus pressed"),
-        lambda: print ("button_t_minus pressed"),
-        on_rec_play_pressed,
-        lambda: print ("button_mute_unmute pressed"),
-        lambda: print ("button_save pressed")
+        lambda: simulate_pressed("button_t_plus pressed"),
+        lambda: simulate_pressed("button_t_minus pressed"),
+        lambda: simulate_pressed("button_rec_play pressed", 10),
+        lambda: simulate_pressed("button_mute_unmute pressed"),
+        lambda: simulate_pressed("button_save pressed")
     )
     time.sleep(60)
 
