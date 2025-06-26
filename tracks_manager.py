@@ -6,84 +6,101 @@ from audio_player import play_loop, stop_playing
 
 
 class Track:
-    def __init__(self, index: int, data: np.ndarray, active: bool = True):
+    def __init__(self, index: int):
         self.index = index
-        self.data = data
-        self.active = active
+        self.muted = False
+        self.data: Optional[np.ndarray] = None
 
-    def toggle(self):
-        self.active = not self.active
+    def __str__(self):
+        mute_status = "Muted" if self.muted else "Played"
+        data_status = "Data" if self.data is not None else "NoData"
+        return f"{mute_status}/{data_status}"
 
-    def is_active(self) -> bool:
-        return self.active
+    def __repr__(self):
+        return self.__str__()
 
 
-class TrackManager:
+class TracksManager:
     def __init__(self):
-        self.sample_rate: int = None
-        self.tracks: Dict[int, Track] = {}
-        self.active_mix: Optional[np.ndarray] = None
+        self.sample_rate: int = 44100  # Default sample rate, can be changed later
+        self.tracks: List[Track] = []
+        self.current_mix: Optional[np.ndarray] = None
+        self.current_track_index: int = -1  # -1 means no track
 
-    def set_track(
-        self, index: int, audio_data: np.ndarray, sample_rate: int, active: bool = True
-    ):
-        if self.sample_rate is None:
-            self.sample_rate = sample_rate
-        elif self.sample_rate != sample_rate:
-            raise ValueError(
-                f"Sample rate mismatch: expected {self.sample_rate}, got {sample_rate}"
-            )
+    def __str__(self):
+        return f"->{self.current_track_index} Tracks={self.tracks}"
 
-        self.tracks[index] = Track(index, audio_data, active)
-        self.mix_active_tracks()
+    def t_plus(self):
+        self.current_track_index += 1
+        if self.current_track_index > len(self.tracks) - 1:
+            self.tracks.append(Track(self.current_track_index))
+        print(self)
 
-    def toggle_track(self, index: int):
-        if index in self.tracks:
-            self.tracks[index].toggle()
-            self.mix_active_tracks()
+    def t_minus(self):
+        print("t_moins")
+        if self.current_track_index > 0:
+            self.current_track_index -= 1
+        print(self)
 
-    def is_active(self, index: int) -> bool:
-        return self.tracks.get(
-            index, Track(index, data=np.array([]), active=False)
-        ).is_active()
+    def toggle_mute(self):
+        print("toggle_mute")
+        current_track = self.tracks[self.current_track_index]
+        current_track.muted = not current_track.muted
+        self.mix_tracks()
+        print(self)
 
-    def get_active_tracks(self) -> Dict[int, np.ndarray]:
-        """Retourne une liste de tracks actives."""
-        return [i for i, track in self.tracks.items() if track.is_active()]
+    def set_track_data(self, data: np.ndarray):
+        print("set_track_data")
+        self.tracks[self.current_track_index].data = data
+        self.mix_tracks()
+        print(self)
 
-    def mix_active_tracks(self):
-        # Mix all active tracks into a single array
-        actives_tacks = [track for track in self.tracks.values() if track.is_active()]
-        print("Active tracks:", [track.index for track in actives_tacks])
-        self.active_mix = create_mix([track.data for track in actives_tacks])
-        if self.active_mix is None:
+    def mix_tracks(self):
+        print("mix_tracks")
+        # Mix all non muted tracks into a single array
+        all_tracks = [track for track in self.tracks if track.muted is False]
+        print("Mix tracks with indexes:", [track.index for track in all_tracks])
+        self.current_mix = create_mix(
+            [track.data for track in all_tracks if track.data is not None]
+        )
+        if self.current_mix is None:
             stop_playing()
         else:
-            play_loop(self.active_mix, self.sample_rate)
+            play_loop(self.current_mix, self.sample_rate)
+
+
+tracks_manager = TracksManager()  # tracks manager instance
 
 
 # Exemple d'utilisation
 def main():
-    track_manager = TrackManager()
-    track_manager.set_track(3, np.array([30, 31, 32]))
-    track_manager.set_track(
-        0,
-        np.array([0, 1, 2]),
-    )
 
-    # L’index 2 est vide pour l’instant
-    print("Track 2 active ?", track_manager.is_active(2))  # False
+    def print_detailled_state():
+        print("Current track index: ", track_manager.current_track_index)
+        print("Tracks: ", track_manager.tracks)
+        print("Current mix: ", track_manager.current_mix)
+        print("")
 
-    # Afficher les tracks actives et le mix actif
-    print("Pistes actives :", track_manager.get_active_tracks())  # [3, 0]
-    print("Active mix", track_manager.active_mix)
+    track_manager = TracksManager()
+    print_detailled_state()
 
-    # Toggle track 0
-    track_manager.toggle_track(0)
+    track_manager.t_plus()
+    print_detailled_state()
 
-    # Afficher les tracks actives et le mix actif
-    print("Pistes actives :", track_manager.get_active_tracks())  # [3, 0]
-    print("Active mix", track_manager.active_mix)
+    track_manager.set_track_data(np.array([0.1, 1], dtype=np.float32))
+    print_detailled_state()
+
+    track_manager.t_plus()
+    print_detailled_state()
+
+    track_manager.set_track_data(np.array([0.5, 1], dtype=np.float32))
+    print_detailled_state()
+
+    track_manager.toggle_mute()
+    print_detailled_state()
+
+    track_manager.t_minus()
+    print_detailled_state()
 
 
 if __name__ == "__main__":

@@ -98,7 +98,10 @@ def mix_tracks(tracks: List[np.ndarray]) -> np.ndarray:
     if not tracks:
         return None
 
-    mix = np.sum(tracks, axis=0,)
+    mix = np.sum(
+        tracks,
+        axis=0,
+    )
     mix = mix.astype(np.float64)
     peak = np.max(np.abs(mix))
 
@@ -109,12 +112,11 @@ def mix_tracks(tracks: List[np.ndarray]) -> np.ndarray:
 
 
 def create_mix(raw_data: List[np.ndarray]):
-    with log_duration(".....create_mix"):
-        if not raw_data:
-            return None
-        aligned_data = align_audio_lengths(raw_data)
-        mixed_audio = mix_tracks(aligned_data)
-        return mixed_audio
+    if not raw_data or len(raw_data) == 0:
+        return None
+    aligned_data = align_audio_lengths(raw_data)
+    mixed_audio = mix_tracks(aligned_data)
+    return mixed_audio
 
 
 # Exemple d'utilisation

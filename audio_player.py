@@ -5,15 +5,14 @@ from debug import log_duration
 
 
 def play_loop(audio_data: np.ndarray, sample_rate: int):
-    with log_duration(".....play_loop"):
-        # duration_seconds = audio_data.shape[0] / sample_rate
-        # print(f"Sample rate: {sample_rate} Hz")
-        # print(f"Total duration of the loop: {duration_seconds:.2f} seconds")
+    # duration_seconds = audio_data.shape[0] / sample_rate
+    # print(f"Sample rate: {sample_rate} Hz")
+    # print(f"Total duration of the loop: {duration_seconds:.2f} seconds")
 
-        # sd.stop()  # Stop any previous playback
-        # Infinite playback loop
-        sd.play(audio_data, sample_rate, loop=True)
-        play_fast(audio_data, sample_rate)
+    # sd.stop()  # Stop any previous playback
+    # Infinite playback loop
+    sd.play(audio_data, sample_rate, loop=True)
+    # play_fast(audio_data, sample_rate)
 
 
 def play_fast(audio_data: np.ndarray, sample_rate: int):

@@ -3,6 +3,8 @@ import sys
 import sounddevice as sd
 import numpy as np
 
+from tracks_manager import tracks_manager
+
 recording = False
 q = queue.Queue()
 samplerate = 44100
@@ -39,12 +41,13 @@ def play():
     if not audio_data:
         print("No data to play")
         return
-    print("let's play in loop")
-    # remet en ligne les blocs audio enregistrés par callback
-    data = np.concatenate(audio_data, axis=0)
-    while not recording:
-        sd.play(data, samplerate)
-        sd.wait()
+    # print("let's play in loop")
+    # # remet en ligne les blocs audio enregistrés par callback
+    # data = np.concatenate(audio_data, axis=0)
+    # while not recording:
+    #     sd.play(data, samplerate)
+    #     sd.wait()
+    tracks_manager.set_track_data(np.concatenate(audio_data, axis=0))
 
 
 def stop():
