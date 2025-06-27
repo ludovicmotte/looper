@@ -118,6 +118,36 @@ arecord --format=S16_LE --duration=5 --rate=16000 --file-type=raw out.raw
 aplay --format=S16_LE --rate=16000 out.raw
 ```
 
+# start python script at statup
+
+sudo vi /etc/systemd/system/looper.service
+```
+[Unit]
+Description=Lance mon script looper.py au démarrage
+After=multi-user.target
+
+[Service]
+Type=simple
+User=axel
+WorkingDirectory=/home/axel/workspace/looper
+ExecStart=/usr/bin/python3 /home/axel/workspace/looper/looper.py
+Restart=on-failure
+```
+
+
+Rechargez systemd et activez le service
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable looper.service
+```
+
+Testez immédiatement sans redémarrer :
+```bash
+sudo systemctl start myscript.service
+sudo journalctl -u myscript.service -f
+```
+
+
 # TODO
 
 ```bash

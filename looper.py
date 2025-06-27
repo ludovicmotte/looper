@@ -1,6 +1,7 @@
 from buttons_managers import start_buttons_listening
 from keyboard_manager_WSL import start_keyboard_listening, stop_keyboard_listening
 from rec_play_manager import on_pressed, stop
+from start import play_melody
 from tracks_manager import tracks_manager
 
 
@@ -23,6 +24,7 @@ def on_rec_play_pressed():
     print("rec/play pressed")
     on_pressed()
 
+
 def on_save_pressed():
     print("save pressed...but currently not implemented")
 
@@ -36,13 +38,16 @@ def on_quit_pressed():
 # Main program
 def main():
 
+    # joue la mélodie qui permet de savoir que le script a bien été lancé
+    play_melody()
+
     # Démarrer l'écoute boutons
     start_buttons_listening(
         on_t_plus_pressed,
         on_t_minus_pressed,
         on_rec_play_pressed,
         on_toggle_mute,
-        on_save_pressed
+        on_save_pressed,
     )
 
     # Démarrer l'écoute du clavier
@@ -57,8 +62,6 @@ def main():
             "esc": on_quit_pressed,
         }
     )
-
-
 
 
 if __name__ == "__main__":
