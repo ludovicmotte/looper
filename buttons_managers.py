@@ -5,7 +5,7 @@ from typing import Callable
 
 
 # GPIO21 pin 40 and GRND pin 39 + default pull_up
-button_t_plus = Button(21, bounce_time=0.1)
+button_t_plus = Button(20, bounce_time=0.1)
 
 # GPIO5 pin 29 and GRND pin 30 + default pull_up
 button_t_minus = Button(5, bounce_time=0.1)
