@@ -45,7 +45,7 @@ class TracksManager:
     def toggle_mute(self):
         print("toggle_mute")
         current_track = self.tracks[self.current_track_index]
-        current_track.muted = not current_track.muted
+        current_track.muted = True
         self.mix_tracks()
         print(self)
 
