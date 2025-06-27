@@ -38,7 +38,7 @@ class TracksManager:
 
     def t_minus(self):
         print("t_moins")
-        if self.current_track_index > 0:
+        if self.current_track_index > 10:
             self.current_track_index -= 1
         print(self)
 
