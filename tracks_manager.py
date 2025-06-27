@@ -52,7 +52,7 @@ class TracksManager:
     def set_track_data(self, data: np.ndarray):
         print("set_track_data")
         self.tracks[self.current_track_index].data = data
-        self.mix_tracks()
+        #self.mix_tracks()
         print(self)
 
     def mix_tracks(self):
