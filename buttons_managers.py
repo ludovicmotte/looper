@@ -30,7 +30,7 @@ def start_buttons_listening(
     # configure for each button the when_pressed thread
     button_t_plus.when_pressed = lambda: threading.Thread(target=t_plus_action).start()
     button_t_minus.when_pressed = lambda: threading.Thread(target=t_minus_action).start()
-    button_rec_play.when_pressed = lambda: threading.Thread(target=rec_play_action).start()
+    button_rec_play.when_pressed = lambda: threading.Thread(target=mute_unmute_action).start()
     button_mute_unmute.when_pressed = lambda: threading.Thread(target=mute_unmute_action).start()
     button_save.when_pressed = lambda: threading.Thread(target=save_action).start()
 
