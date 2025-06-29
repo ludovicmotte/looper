@@ -31,7 +31,7 @@ sudo reboot
 
 ```bash
 sudo apt update
-sudo apt install -y python3.12-venv
+sudo apt install -y python3.11-venv
 python3 -m venv --system-site-packages myenv
 source myenv/bin/activate
 ```
@@ -90,14 +90,14 @@ quit
 Output sound to JBL Flip 3 SE
 ```bash
 wpctl status
-# find Audio / Sinks / JBL Flip 3 SE -> 75
-wpctl set-default 75
+# find Audio / Sinks / JBL Flip 3 SE -> 88
+wpctl set-default 88
 ```
 
 
 Test with
 ```bash
-aplay bass.wav
+aplay testing/beat.wav
 ```
 
 
@@ -159,7 +159,7 @@ python keyboard_manager.py
 Crée un service utilisateur :
 
 mkdir -p ~/.config/systemd/user
-nano ~/.config/systemd/user/looper.service
+vi ~/.config/systemd/user/looper.service
 
 
 [Unit]
@@ -182,11 +182,11 @@ WantedBy=default.target
 Activer le service utilisateur :
 
 systemctl --user daemon-reload
-systemctl --user enable myscript.service
-systemctl --user start myscript.service
+systemctl --user enable looper.service
+systemctl --user start looper.service
 
 
 
 Et pour qu’il se lance automatiquement au boot :
 
-loginctl enable-linger pi
+loginctl enable-linger axel
