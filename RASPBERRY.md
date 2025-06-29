@@ -154,3 +154,39 @@ sudo journalctl -u looper.service -f
 pip install pynput
 python keyboard_manager.py
 ```
+
+
+Crée un service utilisateur :
+
+mkdir -p ~/.config/systemd/user
+nano ~/.config/systemd/user/looper.service
+
+
+[Unit]
+Description=Script qui demarre looper.py
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=/home/axel/workspace/looper/myenv/bin/python /home/axel/workspace/looper/looper.py
+WorkingDirectory=/home/axel/workspace/looper
+Restart=on-failure
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+
+[Install]
+WantedBy=default.target
+
+
+
+Activer le service utilisateur :
+
+systemctl --user daemon-reload
+systemctl --user enable myscript.service
+systemctl --user start myscript.service
+
+
+
+Et pour qu’il se lance automatiquement au boot :
+
+loginctl enable-linger pi
