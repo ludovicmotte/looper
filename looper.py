@@ -1,3 +1,4 @@
+import time
 from buttons_managers import start_buttons_listening
 from keyboard_manager_WSL import start_keyboard_listening, stop_keyboard_listening
 from rec_play_manager import on_pressed, stop
@@ -51,17 +52,19 @@ def main():
     )
 
     # Démarrer l'écoute du clavier
-    start_keyboard_listening(
-        {
-            "+": on_t_plus_pressed,
-            "-": on_t_minus_pressed,
-            "r": on_rec_play_pressed,
-            "m": on_toggle_mute,
-            "s": on_save_pressed,
-            "q": on_quit_pressed,
-            "esc": on_quit_pressed,
-        }
-    )
+    #start_keyboard_listening(
+    #    {
+    #        "+": on_t_plus_pressed,
+    #        "-": on_t_minus_pressed,
+    #        "r": on_rec_play_pressed,
+    #        "m": on_toggle_mute,
+    #        "s": on_save_pressed,
+    #        "q": on_quit_pressed,
+    #        "esc": on_quit_pressed,
+    #    }
+    #)
+    while True:
+        time.sleep(60)
 
 
 if __name__ == "__main__":

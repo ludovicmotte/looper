@@ -11,7 +11,7 @@ source myenv/bin/activate
 # dependencies installation
 ```bash
 sudo apt install -y libportaudio2 portaudio19-dev pulseaudio
-pip install sounddevice scipy sshkeyboard
+pip install sounddevice scipy sshkeyboard soundfile
 ```
 
 Ton code Python

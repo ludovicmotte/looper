@@ -112,7 +112,7 @@ arecord -l
 
 wpctl status
 # find Audio / Sources / BT600 Mono -> 85
-wpctl set-default 91
+wpctl set-default 73
 
 arecord --format=S16_LE --duration=5 --rate=16000 --file-type=raw out.raw
 aplay --format=S16_LE --rate=16000 out.raw
@@ -130,7 +130,7 @@ After=multi-user.target
 Type=simple
 User=axel
 WorkingDirectory=/home/axel/workspace/looper
-ExecStart=/usr/bin/python3 /home/axel/workspace/looper/looper.py
+ExecStart=/home/axel/workspace/looper/myenv/bin/python /home/axel/workspace/looper/looper.py
 Restart=on-failure
 ```
 
@@ -143,8 +143,8 @@ sudo systemctl enable looper.service
 
 Testez immédiatement sans redémarrer :
 ```bash
-sudo systemctl start myscript.service
-sudo journalctl -u myscript.service -f
+sudo systemctl start looper.service
+sudo journalctl -u looper.service -f
 ```
 
 
